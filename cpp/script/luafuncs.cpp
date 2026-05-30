@@ -720,7 +720,7 @@ void luafuncs::reg(sol::state& state)
   state["sampSendDialogResponse"] = [](std::uint16_t id, std::uint8_t button, std::int16_t listitem, std::string_view input) {
     RakNet::BitStream bs;
     bs.Write(id);
-    bs.Write(button);
+    bs.Write(static_cast<std::uint8_t>(button == 1 ? 0 : (button == 0 ? 1 : button)));
     bs.Write(listitem);
     bs.Write<std::uint8_t>(input.size());
     bs.Write(input.data(), static_cast<int>(input.size()));
